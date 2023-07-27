@@ -1,0 +1,14 @@
+{
+	"pages": ["ui/pages/splash/index"],
+	"entryPagePath": "ui/pages/splash/index",
+	"usingComponents": {
+		"claro-animation-loading": "@clarocolombia/claro-super/dist/mini-components/claro-animation-loading/claro-animation-loading"
+	},
+	"window": {
+		"defaultTitle": "Mi Claro",
+		"titleBarColor": "#da291c",
+		"gestureBack": "YES",
+		"enableScrollBar": "YES",
+		"backgroundColor": "#f5f5fc"
+	}
+}

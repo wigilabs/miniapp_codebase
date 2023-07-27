@@ -1,0 +1,4 @@
+<view class="c-splash">
+	<claro-animation-loading />
+	<text class="c-text-primary c-font-weight-600 c-font-size-xl">{{textos.espera.label}}</text>
+</view>
