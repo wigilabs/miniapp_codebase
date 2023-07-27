@@ -1,0 +1,24 @@
+{
+	"trailingComma": "none",
+	"bracketSpacing": false,
+	"printWidth": 120,
+	"tabWidth": 2,
+	"useTabs": true,
+	"semi": true,
+	"singleQuote": false,
+	"singleAttributePerLine": true,
+	"overrides": [
+		{
+			"files": "**/*.acss",
+			"options": {
+				"parser": "css"
+			}
+		},
+		{
+			"files": "**/*.axml",
+			"options": {
+				"parser": "html"
+			}
+		}
+	]
+}

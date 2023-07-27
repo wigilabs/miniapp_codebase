@@ -1,0 +1,23 @@
+{
+	"compilerOptions": {
+		"allowJs": true,
+		"noEmit": true,
+		"esModuleInterop": true,
+		"noImplicitThis": true,
+		"types": ["@mini-types/alipay"],
+		"typeRoots": ["./node_modules/@mini-types", "./node_modules/@types"],
+		"baseUrl": ".",
+		"paths": {
+			"@assets/*": ["./src/assets/*"],
+			"@core/*": ["./src/core/*"],
+			"@ui/*": ["./src/ui/*"],
+			"@scripts/*": ["./src/scripts/*"]
+		},
+		"outDir": "dist",
+		"target": "es6",
+		"module": "ES6"
+	},
+	"lib": ["ES2015"],
+	"include": ["**/*"],
+	"exclude": ["node_modules"]
+}

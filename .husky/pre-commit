@@ -1,0 +1,196 @@
+#!/bin/bash
+. "$(dirname -- "$0")/_/husky.sh"
+
+br="\n"
+startInit="${br}***"
+endInit=":"
+startResp="..."
+endResp="!!${br}"
+startQ="---¿"
+endQ="? [si/no]:"
+siono="... Por favor escribe 'si/s' o 'no/n' ..."
+
+#region rama_no_main
+rama_no_main() {
+	echo -e "$startInit iniciemos la validacion de tu commit$endInit"
+	###Verificar que la rama no es main, ya que no se puede hacer commit directo a main
+	if [ "$(git rev-parse --abbrev-ref HEAD)" = "main" ]; then
+		echo "ERROR: Recuerda que no se puede hacer commit directamente a main, haz checkout a tu rama {{user/funcionalidad}}"
+		exit 1
+	fi
+}
+#endregion
+
+#region ramas_actualizadas
+ramas_actualizadas() {
+	echo -e "$startInit vamos a actualizar tu repositorio local$endInit"
+	###Actualziar las ramas del repositorio
+	git fetch --all --prune
+	git remote prune origin
+	echo -e "$startResp listo, actualizado$endResp"
+}
+#endregion
+
+#region mirama_actualizada
+mirama_actualizada() {
+	mirama=$(git rev-parse --abbrev-ref HEAD)
+	echo -e "$startInit vamos a ver si estás al día con tu propia rama (${mirama})$endInit"
+	##Si la rama existe
+	if [ "$(git rev-parse --verify origin/"${mirama}" 2>/dev/null)" ]; then
+		###Revisar si no tengo en mi rama los últimos cambios remotos
+		if [ "$(git rev-list HEAD..origin/"${mirama}" --count)" -gt 0 ]; then
+			echo "ALERTA: Upss, no estás al día con tu rama"
+
+			exec </dev/tty
+
+			while true; do
+				read -rp "$startQ Deseas bajar los cambios de tu propia rama remota (Solo si realmente confias ('･_･) )$endQ" resp_pull_mirama
+				case "$resp_pull_mirama" in
+				[Ss][Ii] | [Ss])
+					echo -e "$startResp OK, obteniendo los cambios de tu rama remota$endInit"
+					echo -e "$startResp Agregando tus cambios a stash"
+					git stash
+					echo -e "$startResp Bajando los cambios de tu rama remota"
+					git pull origin "$mirama" --ff
+					echo -e "$startResp Obteniendo los cambios del stash"
+					git stash apply
+					break
+					;;
+				[Nn][Oo] | [Nn])
+					echo "ERROR: Ok, debes obtener los cambios de tu rama remota manualmente para continuar$endResp"
+					exit 1
+					;;
+				*)
+					echo "$siono"
+					;;
+				esac
+			done
+		fi
+		echo -e "$startResp listo, al día con tu propia rama remota$endResp"
+	else
+		echo -e "$startResp tu rama aún no existe en el repo de forma remota, puedes continuar$endResp"
+	fi
+}
+#endregion
+
+#region rama_main_actualizada
+rama_main_actualizada() {
+	echo -e "$startInit vamos a ver si estás al día con la rama main$endInit"
+	###Revisar si no tengo en mi rama los últimos cambios de main
+	if [ "$(git rev-list HEAD..origin/main --count)" -gt 0 ]; then
+		echo "ALERTA: Upss, no estás al día con la rama main"
+
+		exec </dev/tty
+
+		while true; do
+			read -rp "$startQ Deseas bajar los cambios de main (Solo si realmente confias ('･_･) )$endQ" resp_pull_main
+			case "$resp_pull_main" in
+			[Ss][Ii] | [Ss])
+				echo -e "$startResp OK, obteniendo los cambios de main$endInit"
+				echo -e "$startInit Agregando tus cambios a stash"
+				git stash
+				echo -e "$startInit Bajando los cambios de main"
+				git pull origin main --ff
+				echo -e "$startInit Obteniendo los cambios del stash"
+				git stash apply
+				break
+				;;
+			[Nn][Oo] | [Nn])
+				echo "ERROR: Ok, debes obtener los cambios de main manualmente para continuar$endResp"
+				exit 1
+				;;
+			*)
+				echo "$siono"
+				;;
+			esac
+		done
+	fi
+	echo -e "$startResp listo, al día con la rama main$endResp"
+}
+#endregion
+
+#region run_format
+run_format() {
+	echo -e "$startInit vamos a formatear los archivos que modificaste$endInit"
+	npx pretty-quick --staged
+
+	exec </dev/tty
+
+	while true; do
+		read -rp "$startQ deseas formatear todos los archivos del proyecto$endQ" resp_format
+		case "$resp_format" in
+		[Ss][Ii] | [Ss])
+			echo -e "$startResp OK, formateando$endInit"
+			npm run format
+			break
+			;;
+		[Nn][Oo] | [Nn])
+			echo -e "$startResp Ok, a futuro es recomendable formatearlos todos para estar todos en sintonía$endResp"
+			break
+			;;
+		*)
+			echo "$siono"
+			;;
+		esac
+	done
+}
+#endregion
+
+#region run_lint
+run_lint() {
+	echo -e "$startInit vamos a lintear todos los archivos$endInit"
+	npm run lint
+}
+#endregion
+
+#region run_test
+run_test() {
+	echo -e "$startInit vamos a ejecutar los tests$endInit"
+	npm run test
+	echo -e "$startResp listo fase de pruebas exitosas$endResp"
+}
+#endregion
+
+#region files_modified
+files_modified() {
+	###Revisar si no tengo en mi rama los últimos cambios de main
+	cant_files=$(git ls-files -m | wc -l)
+	if [ "${cant_files}" -gt 0 ]; then
+		exec </dev/tty
+
+		echo -e "$startInit Tienes los siguientes ${cant_files} archivos modificados sin hacer 'add'$endInit"
+		echo -e "$startResp si ya los revisaste o no se deben subir, puedes continuar sin revisarlos$endInit"
+
+		git ls-files -m
+		echo -e "\n"
+
+		while true; do
+			read -rp "$startQ Quieres continuar sin revisarlos (Recomendado NO continuar sin revisarlos)$endQ" resp_files
+			case "$resp_files" in
+			[Ss][Ii] | [Ss])
+				echo -e "$startResp OK, continuando$endResp"
+				break
+				;;
+			[Nn][Oo] | [Nn])
+				echo -e "$startResp Ok, agrega los archivos que quieres subir con 'git add {{file}}' y vuelve a intetarlo$endResp"
+				exit 1
+				;;
+			*)
+				echo "$siono"
+				;;
+			esac
+		done
+	fi
+}
+#endregion
+
+### LLamado funciones
+rama_no_main
+ramas_actualizadas
+mirama_actualizada
+#rama_main_actualizada
+##TODO: pretty quick with prettier
+run_format
+run_lint
+run_test
+files_modified
