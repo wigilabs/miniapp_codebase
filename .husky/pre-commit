@@ -184,13 +184,22 @@ files_modified() {
 }
 #endregion
 
+#region code_review
+code_review() {
+	echo -e "$startInit Vamos a hacer review inicial del codigo$endInit"
+	./review.sh
+	echo -e "$startResp listo code review inicial exitoso$endResp"
+}
+#endregion
+
 ### LLamado funciones
 rama_no_main
 ramas_actualizadas
 mirama_actualizada
-#rama_main_actualizada
+rama_main_actualizada
 ##TODO: pretty quick with prettier
 run_format
 run_lint
 run_test
 files_modified
+code_review
