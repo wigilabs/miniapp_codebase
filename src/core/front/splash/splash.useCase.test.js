@@ -1,7 +1,7 @@
 import {MockAccount, MockPerfilModel, MockSystemInfo, getMockHttpModel} from "../../common/testing/mockDataTest";
-import {HttpAdapter, PhoneAdapter, StorageAdapter, VisualAdapter, RouterAdapter} from "../../common/infra/index";
+import {HttpAdapter, PhoneAdapter, RouterAdapter, StorageAdapter, VisualAdapter} from "../../common/infra/index";
 import {HttpPort, PhonePort, RouterPort, StoragePort, VisualPort} from "../../common/aplication/index";
-import {StorageKey, StorageModel, MiClaroKey as mck, CuentaModel} from "../../common/domain/index";
+import {CuentaModel, StorageKey, StorageModel, MiClaroKey as mck} from "../../common/domain/index";
 import {SplashUseCase} from "./splash.useCase";
 
 jest.mock("../../common/infra/storage.adapter");

@@ -16,6 +16,7 @@ export class SplashUseCase {
 		this.httpPort = HttpPort.getInstance;
 		this.storagePort = StoragePort.getInstance;
 		this.visualPort = VisualPort.getInstance;
+		this.data = dataPage;
 	}
 
 	async consumirServicioVersiones() {
@@ -23,25 +24,18 @@ export class SplashUseCase {
 			const request = await this.miclaroPort.getRequest({method: "GET", servicio: MiClaroKey.services.versiones});
 			return new ResponseModel(await this.httpPort.execute(request));
 		} catch (err) {
-			return new ResponseModel(
-				this.httpPort.errorHandler(err),
-				true,
-				HttpCodesKey.SERVER_ERROR
-			);
+			return new ResponseModel(this.httpPort.errorHandler(err), true, HttpCodesKey.SERVER_ERROR);
 		}
 	}
 
 	guardarStorageVersiones(infoVersiones) {
-		this.storagePort.agregar(new StorageModel(
-			StorageKey.versiones,
-			new VersionesModel(infoVersiones)
-		));
+		this.storagePort.agregar(new StorageModel(StorageKey.versiones, new VersionesModel(infoVersiones)));
 		return new ResponseModel();
 	}
 
 	setDataInicial() {
 		return new ResponseModel({
-			textos: dataPage.textos
+			textos: this.data.textos
 		});
 	}
 
