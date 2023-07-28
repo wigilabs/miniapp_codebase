@@ -33,7 +33,7 @@
 		"lint": "run-p lint:*",
 		"test": "jest --coverage --clearMocks --errorOnDeprecated --expand",
 		"test:only": "npm run test -- -o",
-		"check": "run-s format lint test",
+		"check": "run-s lint test format",
 		"prepare": "husky install",
 		"release": "npm install && standard-version",
 		"dep:src": "depcruise --collapse \"^(src/core|src/ui|src/scripts)/[^/]+|node_modules/(@[^/]+/[^/]+|[^/]+)\" src --output-type dot | dot -T svg > results/deps/1src.svg",

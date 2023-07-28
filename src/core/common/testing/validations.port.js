@@ -22,7 +22,7 @@ export class ValidationsPort {
 			} else {
 				console.log(typeof data);
 				console.log(typeof model);
-				console.error(`data o modelo para ${tag} no validos:`, data, model);
+				throw new Error(`data o modelo para ${tag} no validos:`, data, model);
 			}
 		}
 	}
@@ -56,12 +56,11 @@ export class ValidationsPort {
 			if (servicio.model) {
 				if (!(data instanceof servicio.model)) {
 					const ServiceModel = servicio.model;
-					console.error(`modelo ${new ServiceModel().constructor.name} no valido para ${servicio.name} :`);
 					console.warn(data);
-					// Throw new Error(`Invalid ${new model().constructor.name} model`);
+					throw new Error(`modelo ${new ServiceModel().constructor.name} no valido para ${servicio.name} :`);
 				}
 			} else {
-				console.error(`No existe un modelo para ${servicio.name}`);
+				throw new Error(`No existe un modelo para ${servicio.name}`);
 			}
 		}
 	}
