@@ -17,23 +17,14 @@ export class AppUseCase {
 	}
 
 	iniciarStorageCuenta() {
-		this.storagePort.agregar(new StorageModel(
-			StorageKey.cuenta,
-			CuentaModel.getInstance
-		));
+		this.storagePort.agregar(new StorageModel(StorageKey.cuenta, CuentaModel.getInstance));
 	}
 
 	inicializarStorageUsuario() {
-		this.storagePort.agregar(new StorageModel(
-			StorageKey.usuario,
-			PerfilModel.getInstance
-		));
+		this.storagePort.agregar(new StorageModel(StorageKey.usuario, PerfilModel.getInstance));
 	}
 
 	inicializarStorageVersiones() {
-		this.storagePort.agregar(new StorageModel(
-			StorageKey.versiones,
-			new VersionesModel()
-		));
+		this.storagePort.agregar(new StorageModel(StorageKey.versiones, new VersionesModel()));
 	}
 }

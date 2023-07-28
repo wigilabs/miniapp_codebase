@@ -21,18 +21,16 @@ export function navigate(url = "", query = "") {
 		url = `/${url}/`;
 		const page = pages.filter((myPage) => myPage.includes(url));
 		if (page.length === 1) {
-			query = query
-				? `?${query}`
-				: query;
+			query = query ? `?${query}` : query;
 			url = `/${page[0]}${query}`;
 			my.navigateTo({
 				url
 			});
 		} else {
-			console.error(`${url} no es una ruta valida`);
+			throw new Error(`${url} no es una ruta valida`);
 		}
 	} else {
-		console.error("debe ser una ruta valida");
+		throw new Error("debe ser una ruta valida");
 	}
 }
 
@@ -45,10 +43,10 @@ export function redirect(url = "") {
 				url: `/${page[0]}`
 			});
 		} else {
-			console.error(`${url} no es una ruta valida`);
+			throw new Error(`${url} no es una ruta valida`);
 		}
 	} else {
-		console.error("debe ser una ruta valida");
+		throw new Error("debe ser una ruta valida");
 	}
 }
 
@@ -94,9 +92,7 @@ export function myrequest(requestConfig) {
 				if (res.error && res.errorMessage) {
 					reject(res);
 				} else {
-					reject(res.data
-						? res.data
-						: res);
+					reject(res.data ? res.data : res);
 				}
 			},
 			success(res) {
@@ -104,9 +100,7 @@ export function myrequest(requestConfig) {
 					if (parseInt(res.data.error) === 0 && res.data.response) {
 						resolve(res.data.response);
 					} else {
-						reject(res.data.response
-							? res.data.response
-							: res.data);
+						reject(res.data.response ? res.data.response : res.data);
 					}
 				} else {
 					console.error(res);

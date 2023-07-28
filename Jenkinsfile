@@ -152,7 +152,7 @@ def getMsgTemplate(SUFIJO,isResult=false) {
 
 def makeRequest(reqbody=""){
 
-	def urlwebhook = 'https://wigilabs.webhook.office.com/webhookb2/385b5b7e-997b-49dc-a258-23553c6f4ce5@c24de5b8-8a13-49ae-ab15-233b27d3d516/JenkinsCI/1360d322f9804a878141890849913143/40af3309-6efa-46ec-a5b0-493b61b06103'
+	def urlwebhook = 'xx'
 
   httpRequest httpMode: 'POST',
   acceptType: 'APPLICATION_JSON',

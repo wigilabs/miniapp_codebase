@@ -1,0 +1,17 @@
+trigger:
+  - none
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  - task: NodeTool@0
+    inputs:
+      versionSource: "spec"
+      versionSpec: "20.x"
+      checkLatest: true
+    displayName: "Install Node.js"
+  - script: |
+      npm install
+      npm run check
+    displayName: "npm install and check"

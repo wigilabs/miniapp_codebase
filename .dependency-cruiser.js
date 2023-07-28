@@ -191,7 +191,7 @@ module.exports = {
           leave out if you want to exclude neither (recommended!)
     */
 		exclude: {
-			path: "^(coverage|doc|node_modules|.tea|src/core/front/[^W]+/[^W]*test.js|src/core/common/testing)"
+			path: "^(coverage|doc|node_modules|.tea|src/core/front/[^W]+/[^W]*test.js|src/core/common/testing|^@\b.*)"
 		},
 
 		/* pattern specifying which files to include (regular expression)
