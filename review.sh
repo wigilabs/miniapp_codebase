@@ -252,7 +252,7 @@ no_style
 echo -e "Estilos en linea: OK"
 acss
 echo -e "Estilos en archivos acss: OK"
-no_skip_lint
+#no_skip_lint
 echo -e "Saltar linter: OK"
 deps
 echo -e "Dependencias: OK"
