@@ -1,0 +1,3 @@
+<text class="c-text-align-center"> {{tipo}} </text>
+
+<button onTap="formatText"></button>
