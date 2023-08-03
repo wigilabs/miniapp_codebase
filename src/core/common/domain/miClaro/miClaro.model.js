@@ -57,8 +57,8 @@ class MiClaroEndpointsModel {
 					throw new Error(`El servicio ${skey} no se reconoce como un servicio válido`);
 				}
 
-				if (servicio.key && servicio.segmento && servicio.path && mck.services[servicio.key]) {
-					this.metodos[mck.services[servicio.key].name] = `${mck.segmentos[servicio.segmento]}${servicio.path}`;
+				if (servicio.key && servicio.segmento && servicio.path && mck.services[serviceKey].name == servicio.key) {
+					this.metodos[mck.services[serviceKey].name] = `${mck.segmentos[servicio.segmento]}${servicio.path}`;
 				}
 			} else {
 				throw new Error(`El servicio ${serviceKey} no se reconoce como un servicio válido`);

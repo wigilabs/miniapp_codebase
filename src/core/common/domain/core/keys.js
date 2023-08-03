@@ -40,7 +40,8 @@ export const GeneralMessagesKey = {
 };
 
 export const AppUrlKey = {
-	splash: "splash"
+	splash: "splash",
+	home: "home"
 };
 
 export const NavigatesPathKey = {};

@@ -1,5 +1,5 @@
 {
-	"pages": ["ui/pages/splash/index"],
+	"pages": ["ui/pages/splash/index", "ui/pages/home/index"],
 	"entryPagePath": "ui/pages/splash/index",
 	"usingComponents": {
 		"claro-animation-loading": "@clarocolombia/claro-super/dist/mini-components/claro-animation-loading/claro-animation-loading"

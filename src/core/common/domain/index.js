@@ -22,3 +22,4 @@ export {SessionModel} from "./miClaro/session.model";
 export {StorageModel} from "./core/storage.model";
 export {SystemModel} from "./core/system.model";
 export {VersionesModel} from "./app/versiones.model";
+export {ReqAccountIdModel} from "./miClaro/reqServicios.model";
