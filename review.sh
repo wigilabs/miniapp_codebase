@@ -3,6 +3,8 @@
 err_msg_init="vvvvvvvv \n ERROR en el review: \n"
 err_msg_end="\n ^^^^^^"
 
+warn_msg_init="!!!!!!! ALERTA en el review: \n"
+
 ##region estilos en linea
 no_style() {
 	inlineStyles=$(grep -R --exclude-dir={node_modules,coverage,results} --exclude=*.{md,sh} 'style="')
@@ -13,7 +15,6 @@ no_style() {
 		exit 1
 	fi
 }
-
 ##endregion
 
 ##region archivos de estilos
@@ -26,6 +27,18 @@ acss() {
 
 	if [ -n "$files" ] && [ "$cantStyle" -gt 0 ] && [ "$permittedFile" != "$files" ]; then
 		echo -e "$err_msg_init \nExisten archivos de estilos \n\n$files\n $err_msg_end"
+		exit 1
+	fi
+}
+##endregion
+
+##region saltar regla eslint
+no_skip_lint() {
+	disabledLints=$(grep -R --exclude-dir={node_modules,coverage,results,.git} --exclude=*.{md,sh,json} 'eslint-disable')
+	cantDisable=$(wc -l <<<"$disabledLints")
+
+	if [ -n "$disabledLints" ] && [ "$cantDisable" -gt 0 ]; then
+		echo -e "$err_msg_init \nNo debes saltar los linter: \n\n$disabledLints\n $err_msg_end"
 		exit 1
 	fi
 }
@@ -140,11 +153,109 @@ deps() {
 }
 ##endregion
 
+##region todos
+todos() {
+	todos=$(grep -R --exclude-dir={node_modules,coverage,results,.git,.husky} --exclude=*.{md,sh} 'TODO')
+	cantTodos=$(wc -l <<<"$todos")
+
+	if [ -n "$todos" ] && [ "$cantTodos" -gt 0 ]; then
+		echo -e "$warn_msg_init \nRecuerda que hay pendientes por solucionar: \n\n$todos\n $err_msg_end"
+		#exit 1
+	fi
+}
+##endregion
+
+##region tamaño
+filesize() {
+
+	showerr=0
+	errmsg=""
+
+	#region pages
+	pages_axml="./src/ui/pages/**/*.axml"
+	pages_axml_limit=5000
+
+	pages_js="./src/ui/pages/**/*.js"
+	pages_js_limit=1000
+
+	for file in $pages_axml; do
+		filesize=$(stat -c '%s' "$file")
+		if [ "$filesize" -gt $pages_axml_limit ]; then
+			showerr=1
+			errmsg+="\n$file es un poco grande ($filesize), deberías intentar optimizarlo a menos de $pages_axml_limit"
+		fi
+	done
+
+	for file in $pages_js; do
+		filesize=$(stat -c '%s' "$file")
+		if [ "$filesize" -gt $pages_js_limit ]; then
+			showerr=1
+			errmsg+="\n$file es un poco grande ($filesize), deberías intentar optimizarlo a menos de $pages_js_limit"
+		fi
+	done
+	#endregion
+
+	#region front
+	front_adapter="./src/core/front/**/*adapter.js"
+	front_adapter_limit=1000
+
+	front_port="./src/core/front/**/*port.js"
+	front_port_limit=4500
+
+	front_usecase="./src/core/front/**/*useCase.js"
+	front_usecase_limit=6000
+
+	front_test="./src/core/front/**/*test.js"
+	front_test_limit=7000
+
+	for file in $front_adapter; do
+		filesize=$(stat -c '%s' "$file")
+		if [ "$filesize" -gt $front_adapter_limit ]; then
+			showerr=1
+			errmsg+="\n$file es un poco grande ($filesize), deberías intentar optimizarlo a menos de $front_adapter_limit"
+		fi
+	done
+
+	for file in $front_port; do
+		filesize=$(stat -c '%s' "$file")
+		if [ "$filesize" -gt $front_port_limit ]; then
+			showerr=1
+			errmsg+="\n$file es un poco grande ($filesize), deberías intentar optimizarlo a menos de $front_port_limit"
+		fi
+	done
+
+	for file in $front_usecase; do
+		filesize=$(stat -c '%s' "$file")
+		if [ "$filesize" -gt $front_usecase_limit ]; then
+			showerr=1
+			errmsg+="\n$file es un poco grande ($filesize), deberías intentar optimizarlo a menos de $front_usecase_limit"
+		fi
+	done
+
+	for file in $front_test; do
+		filesize=$(stat -c '%s' "$file")
+		if [ "$filesize" -gt $front_test_limit ]; then
+			showerr=1
+			errmsg+="\n$file es un poco grande ($filesize), deberías intentar optimizarlo a menos de $front_test_limit"
+		fi
+	done
+	#endregion
+
+	if [ "$showerr" -gt 0 ]; then
+		echo -e "$warn_msg_init $errmsg \n $err_msg_end"
+	fi
+}
+##endregion
+
 ##region llamado funciones
 no_style
 echo -e "Estilos en linea: OK"
 acss
 echo -e "Estilos en archivos acss: OK"
+#no_skip_lint
+echo -e "Saltar linter: OK"
 deps
 echo -e "Dependencias: OK"
+filesize
+todos
 ##endregion

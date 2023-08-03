@@ -1,0 +1,6 @@
+<view class="c-splash">
+	<view> {{texto1}} </view>
+	<view> {{texto2}} </view>
+	<view a:if="!showError"> {{servicio}} </view>
+	<view a:if="showError"> {{error}} </view>
+</view>

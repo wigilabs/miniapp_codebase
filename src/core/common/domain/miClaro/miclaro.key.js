@@ -1,4 +1,7 @@
+import {ReqAccountIdModel} from "./reqServicios.model";
+
 const MiclaroServicesKey = {
+	llavedeprueba: {model: ReqAccountIdModel, name: "validarNumero"},
 	versiones: {model: "", name: "versiones"}
 };
 

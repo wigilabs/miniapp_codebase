@@ -1,4 +1,4 @@
-import {StorageAdapter} from "../infra/";
+import {StorageAdapter} from "../infra/index";
 import {ValidationsPort} from "../testing/validations.port";
 
 export class StoragePort {

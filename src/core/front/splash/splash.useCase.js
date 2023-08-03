@@ -40,7 +40,7 @@ export class SplashUseCase {
 	}
 
 	redirectLogin() {
-		this.routerPort.redirect(AppUrlKey.login);
+		this.routerPort.redirect(AppUrlKey.home);
 	}
 
 	mostrarAlerta(response) {

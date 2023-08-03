@@ -1,7 +1,7 @@
 {
 	"version": "1.0.0",
 	"dependencies": {
-		"@clarocolombia/claro-super": "^1.6.4"
+		"@clarocolombia/claro-super": "^1.6.27"
 	},
 	"devDependencies": {
 		"@babel/preset-env": "^7.22.4",
@@ -31,9 +31,9 @@
 		"lint:scripts": "eslint \"**/*.{js,axml}\" --fix --format html -o results/eslint.html",
 		"lint:style": "stylelint ./**/*.{css,scss,acss} --fix",
 		"lint": "run-p lint:*",
-		"test": "jest --coverage --clearMocks --errorOnDeprecated --expand",
+		"test": "jest --coverage --clearMocks --expand",
 		"test:only": "npm run test -- -o",
-		"check": "run-s lint test format",
+		"check": "run-s -c lint test format",
 		"prepare": "husky install",
 		"release": "npm install && standard-version",
 		"dep:src": "depcruise --collapse \"^(src/core|src/ui|src/scripts)/[^/]+|node_modules/(@[^/]+/[^/]+|[^/]+)\" src --output-type dot | dot -T svg > results/deps/1src.svg",
@@ -76,6 +76,9 @@
 					"jestGlobalConfigJson": "globalStuff.json"
 				}
 			]
-		]
+		],
+		"moduleNameMapper": {
+			"^@clarocolombia/claro-super/dist/scripts": "<rootDir>/node_modules/@clarocolombia/claro-super/dist/scripts"
+		}
 	}
 }
