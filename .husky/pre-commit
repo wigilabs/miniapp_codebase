@@ -131,32 +131,8 @@ rama_main_actualizada() {
 
 #region run_format
 run_format() {
-
 	echo -e "$startInit vamos a formatear todos los archivos $endInit"
 	npm run format
-
-	# echo -e "$startInit vamos a formatear los archivos que modificaste$endInit"
-	# npx pretty-quick --staged
-
-	# exec </dev/tty
-
-	# while true; do
-	# 	read -rp "$startQ deseas formatear todos los archivos del proyecto$endQ" resp_format
-	# 	case "$resp_format" in
-	# 	[Ss][Ii] | [Ss])
-	# 		echo -e "$startResp OK, formateando$endInit"
-	# 		npm run format
-	# 		break
-	# 		;;
-	# 	[Nn][Oo] | [Nn])
-	# 		echo -e "$startResp Ok, a futuro es recomendable formatearlos todos para estar todos en sintonía$endResp"
-	# 		break
-	# 		;;
-	# 	*)
-	# 		echo "$siono"
-	# 		;;
-	# 	esac
-	# done
 }
 #endregion
 
@@ -222,8 +198,7 @@ prev_check
 rama_no_main
 ramas_actualizadas
 mirama_actualizada
-#rama_main_actualizada
-##TODO: pretty quick with prettier
+rama_main_actualizada
 run_lint
 run_test
 run_format

@@ -39,6 +39,7 @@ class MiClaroEndpointsModel {
 	}
 
 	// TODO: Los endpoints deben ser singleton?
+
 	static instance;
 
 	static get getInstance() {
@@ -57,7 +58,7 @@ class MiClaroEndpointsModel {
 					throw new Error(`El servicio ${skey} no se reconoce como un servicio válido`);
 				}
 
-				if (servicio.key && servicio.segmento && servicio.path && mck.services[serviceKey].name == servicio.key) {
+				if (servicio.key && servicio.segmento && servicio.path && mck.services[serviceKey].name === servicio.key) {
 					this.metodos[mck.services[serviceKey].name] = `${mck.segmentos[servicio.segmento]}${servicio.path}`;
 				}
 			} else {

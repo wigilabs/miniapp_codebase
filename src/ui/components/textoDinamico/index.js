@@ -9,12 +9,13 @@ Component({
 		formatText() {
 			const {info, error} = textFormated(this.props);
 			if (!error) {
-				this.setData({info});
+				this.setData(info);
 			}
 		}
 	},
 	mixins: [],
 	props: {
+		numeroUsuario: "",
 		tipo: ""
 	}
 });

@@ -1,11 +1,14 @@
-import {iniciar} from "../../../core/front/home/home.adapter";
+import {iniciar, obtener} from "../../../core/front/home/home.adapter";
 
 function adapterResponse(called, response) {
 	response.error ? console.error(response.info) : called.setData(response.info);
 }
 
 Page({
-	async onLoad() {
-		adapterResponse(this, await iniciar());
+	onLoad() {
+		adapterResponse(this, iniciar());
+	},
+	async traer() {
+		adapterResponse(this, await obtener());
 	}
 });

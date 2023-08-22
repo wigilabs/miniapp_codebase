@@ -96,7 +96,7 @@ module.exports = {
 				"This module depends on a module that cannot be found ('resolved to disk'). If it's an npm " +
 				"module: add it to your package.json. In all other cases you likely already know what to do.",
 			severity: "error",
-			from: {pathNot: "^@\b.*"},
+			from: {},
 			to: {
 				couldNotResolve: true
 			}
@@ -191,7 +191,7 @@ module.exports = {
           leave out if you want to exclude neither (recommended!)
     */
 		exclude: {
-			path: "^(coverage|doc|node_modules|.tea|src/core/front/[^W]+/[^W]*test.js|src/core/common/testing|^@\b.*)"
+			path: "^(coverage|doc|node_modules|.tea|src/core/front/[^W]+/[^W]*test.js|src/core/common/testing|^@clarocolombia)"
 		},
 
 		/* pattern specifying which files to include (regular expression)

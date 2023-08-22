@@ -140,14 +140,17 @@ describe("showError", () => {
 		const visualAdapterMock = VisualAdapter.mock.instances[0];
 
 		// Llamar a la función showError con los datos de prueba
+
 		const title = "Error";
 		const msg = "Se ha producido un error.";
 		useCase.showError({title, msg});
 
 		// Verificar que la función alert haya sido llamada
+
 		expect(visualAdapterMock.alert).toHaveBeenCalled();
 
 		// Verificar los parámetros con los que fue llamada la función alert
+
 		expect(visualAdapterMock.alert).toHaveBeenCalledWith({title, msg});
 	});
 });

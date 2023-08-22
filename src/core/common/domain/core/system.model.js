@@ -2,6 +2,7 @@ import {ValidationsPort} from "../../testing/validations.port";
 
 export class SystemModel {
 	// TODO: debe ser singleton
+
 	constructor(infoSystem = {}) {
 		this.version = infoSystem.version;
 		this.modelo = infoSystem.model;

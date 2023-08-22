@@ -30,6 +30,7 @@ export class PhonePort {
 	}
 
 	// TODO: está función es de este puerto???
+
 	getAppid() {
 		return this.adapter.getAPPID();
 	}

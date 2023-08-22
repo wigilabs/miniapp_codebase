@@ -1,0 +1,14 @@
+<template name="ejemplo">
+	<view
+		a:if="{{ tempData.mostrarA}}"
+		class="c-subheader c-mb-40"
+	>
+		<text class="c-heading-1 c-text-align-center"> A </text>
+	</view>
+	<view
+		a:else
+		class="c-subheader c-mb-40"
+	>
+		<text class="c-heading-1 c-text-align-center">B</text>
+	</view>
+</template>

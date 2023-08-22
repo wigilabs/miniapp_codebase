@@ -1,7 +1,7 @@
 {
 	"version": "1.0.0",
 	"dependencies": {
-		"@clarocolombia/claro-super": "^1.6.27"
+		"@clarocolombia/claro-super": "^1.7.9"
 	},
 	"devDependencies": {
 		"@babel/preset-env": "^7.22.4",
@@ -28,10 +28,13 @@
 	},
 	"scripts": {
 		"format": "prettier \"**/*.{js,acss,axml}\" --write",
+		"basic-lint:scripts": "eslint \"**/*.{js,axml}\"",
+		"basic-lint:style": "stylelint ./**/*.{css,scss,acss}",
+		"basic-lint": "run-p basic-lint:*",
 		"lint:scripts": "eslint \"**/*.{js,axml}\" --fix --format html -o results/eslint.html",
 		"lint:style": "stylelint ./**/*.{css,scss,acss} --fix",
 		"lint": "run-p lint:*",
-		"test": "jest --coverage --clearMocks --expand",
+		"test": "jest --coverage --clearMocks --expand --passWithNoTests",
 		"test:only": "npm run test -- -o",
 		"check": "run-s -c lint test format",
 		"prepare": "husky install",
@@ -44,7 +47,8 @@
 		"dep:core_common": "depcruise --collapse \"^(src/core/front|src/ui|src/scripts)/[^/]+|node_modules/(@[^/]+/[^/]+|[^/]+)\" src --output-type dot | dot -T svg > results/deps/6core_common.svg",
 		"dep:all": "depcruise src --output-type dot | dot -T svg > results/deps/7all.svg",
 		"dep": "mkdirp results/deps && run-p dep:*",
-		"reporte": "run-s -c lint dep test format"
+		"reporte": "run-s -c lint dep test format",
+		"review": "bash ./review.sh"
 	},
 	"jest": {
 		"bail": 1,

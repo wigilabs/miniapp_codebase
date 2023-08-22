@@ -1,3 +1,17 @@
-<text class="c-text-align-center"> {{tipo}} </text>
+<text
+	a:if="{{tipo == data.validaciones.typeChange}}"
+	class="c-text-align-center"
+>
+	{{data.textos.onePopUp.firstText}}
+	<text class="c-font-weight-600 c-ml-5 c-text-nowrap">{{data.numeroUsuarioFormateado}}</text>
+	{{data.textos.secondText}}
+</text>
 
-<button onTap="formatText"></button>
+<text
+	a:if="{{tipo == data.validaciones.typeDesactive}}"
+	class="c-text-align-center"
+>
+	{{data.textos.secondPopUp.firstText}}
+	<text class="c-font-weight-600 c-ml-5 c-text-nowrap">{{data.numeroUsuarioFormateado}}</text>
+	{{data.textos.secondText}}
+</text>
