@@ -34,12 +34,20 @@ acss() {
 
 ##region saltar regla eslint
 no_skip_lint() {
+
+	permittedFile="src/core/common/testing/validations.port.js"
+
 	disabledLints=$(grep -R --exclude-dir={node_modules,coverage,results,.git} --exclude=*.{md,sh,json} 'eslint-disable')
 	cantDisable=$(wc -l <<<"$disabledLints")
 
-	if [ -n "$disabledLints" ] && [ "$cantDisable" -gt 0 ]; then
-		echo -e "$err_msg_init \nNo debes saltar los linter: \n\n$disabledLints\n $err_msg_end"
-		exit 1
+	if [ -n "$disabledLints" ]; then
+		if [ "$cantDisable" -gt 1 ]; then
+			echo -e "$err_msg_init \nNo debes saltar los linter: \n\n$disabledLints\n $err_msg_end"
+			exit 1
+		elif [[ "$disabledLints" != *"$permittedFile"* ]]; then
+			echo -e "$err_msg_init \nNo debes saltar los linter: \n\n$disabledLints\n $err_msg_end"
+			exit 1
+		fi
 	fi
 }
 ##endregion
@@ -247,12 +255,43 @@ filesize() {
 }
 ##endregion
 
+##region estructura
+structure() {
+	rutaPages="./src/ui/pages/"
+	rutaComponents="./src/ui/components/"
+
+	for ruta in "$rutaPages"*; do
+		#echo -e "La ruta es $ruta"
+		file="${ruta#"$rutaPages"}"
+		#echo -e "carpeta es: ${file}"
+		rutaFront="./src/core/front/$file"
+		if [ ! -d "$rutaFront" ]; then
+			echo -e "$err_msg_init \n$ruta existe, pero no existe una carpeta relacionada $rutaFront\n $err_msg_end"
+			exit 1
+		fi
+	done
+
+	for ruta in "$rutaComponents"*; do
+		#echo -e "La ruta es $ruta"
+		file="${ruta#"$rutaComponents"}"
+		#echo -e "carpeta es: ${file}"
+		rutaFront="./src/core/front/$file"
+		if [ ! -d "$rutaFront" ] && [[ $file != *"*"* ]]; then
+			echo -e "$err_msg_init \n$ruta existe, pero no existe una carpeta relacionada $rutaFront\n $err_msg_end"
+			exit 1
+		fi
+	done
+}
+##endregion
+
 ##region llamado funciones
 no_style
 echo -e "Estilos en linea: OK"
 acss
 echo -e "Estilos en archivos acss: OK"
-#no_skip_lint
+structure
+echo -e "Estrucutra: OK"
+no_skip_lint
 echo -e "Saltar linter: OK"
 deps
 echo -e "Dependencias: OK"

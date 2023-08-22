@@ -1,5 +1,5 @@
 trigger:
-  - none
+  - main
 
 pool:
   vmImage: ubuntu-latest
@@ -13,5 +13,16 @@ steps:
     displayName: "Install Node.js"
   - script: |
       npm install
-      npm run check
-    displayName: "npm install and check"
+    displayName: "instalar dependencias"
+  - script: |
+      npm run basic-lint
+    displayName: "lint"
+  - script: |
+      npm run test
+    displayName: "test"
+  - script: |
+      npm run format
+    displayName: "format"
+  - script: |
+      npm run review
+    displayName: "review"

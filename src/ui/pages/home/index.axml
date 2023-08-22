@@ -1,6 +1,26 @@
-<view class="c-splash">
-	<view> {{texto1}} </view>
-	<view> {{texto2}} </view>
+<import src="../../templates/ejemplo/index.axml" />
+
+<view class=""> {{textos.mensajeBienvenida}} </view>
+<template
+	is="ejemplo"
+	data="{{tempData}}"
+/>
+<button onTap="traer">Traer Ejemplo</button>
+<view
+	class=""
+	a:if="{{dataStorage}}"
+>
+	<view>---------***---------</view>
+	<view class=""> {{infoData}} </view>
+	<view>---------***---------</view>
+	<view> {{dataStorage}} </view>
+	<view>---------***---------</view>
 	<view a:if="!showError"> {{servicio}} </view>
+	<view>---------***---------</view>
 	<view a:if="showError"> {{error}} </view>
+	<view>---------***---------</view>
+	<texto-dinamico
+		tipo="{{textos.componente.title}}"
+		numeroUsuario="{{constantes.numero}}"
+	/>
 </view>

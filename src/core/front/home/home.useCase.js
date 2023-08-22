@@ -10,7 +10,7 @@ export class HomeUseCase {
 	}
 
 	mensajeBienvenida() {
-		return new ResponseModel(dataPage.textos.mensajebienvenida);
+		return new ResponseModel(`${this.data.textos.mensajeBienvenida} ${this.data.textos.mensajeUseCase}`);
 	}
 
 	async obtenerStorageVersiones() {

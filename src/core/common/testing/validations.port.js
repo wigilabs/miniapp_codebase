@@ -11,6 +11,7 @@ export class ValidationsPort {
 	}
 
 	// Private
+
 	validarTipoData({data = "", init = false, model = "", tag = ""}) {
 		if (!init) {
 			if (data && model) {
@@ -28,6 +29,7 @@ export class ValidationsPort {
 	}
 
 	// Private
+
 	conteo({data = {}, init = false, tag = ""}) {
 		const action = init ? "creado" : "actualizado";
 

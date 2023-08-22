@@ -1,5 +1,7 @@
 import {ValidationsPort} from "../testing/validations.port";
+
 // Import {getServicios} from "@clarocolombia/claro-super/dist/scripts";
+
 import {listaServicios} from "../../../scripts/endpoints";
 export class MiClaroAdapter {
 	constructor() {
@@ -20,8 +22,9 @@ export class MiClaroAdapter {
 		return this.instance;
 	}
 
-	allServices(appid = 0) {
+	allServices() {
 		// Return this.servicios(appid);
+
 		return this.servicios;
 	}
 }

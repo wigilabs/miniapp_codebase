@@ -2,7 +2,8 @@
 	"pages": ["ui/pages/splash/index", "ui/pages/home/index"],
 	"entryPagePath": "ui/pages/splash/index",
 	"usingComponents": {
-		"claro-animation-loading": "@clarocolombia/claro-super/dist/mini-components/claro-animation-loading/claro-animation-loading"
+		"claro-animation-loading": "@clarocolombia/claro-super/dist/mini-components/claro-animation-loading/claro-animation-loading",
+		"texto-dinamico": "/ui/components/textoDinamico/index"
 	},
 	"window": {
 		"defaultTitle": "Mi Claro",
